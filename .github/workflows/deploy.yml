@@ -36,15 +36,15 @@ jobs:
           path: Finance-System-${{ github.sha }}.jar
 
 
-fake-deploy:
-  runs-on: self-hosted
-  needs: run-unit-tests
-  steps:
-    - name: Get the artifact
-      uses: actions/download-artifact@master
-      with:
-        name: Finance-System
+  fake-deploy:
+    runs-on: self-hosted
+    needs: run-unit-tests
+    steps:
+      - name: Get the artifact
+        uses: actions/download-artifact@master
+        with:
+          name: Finance-System
 
-    - name: Fake deploy
-      run: ls Finance-System*.jar
+      - name: Fake deploy
+        run: ls Finance-System*.jar
 
