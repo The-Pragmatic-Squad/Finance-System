@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
-@Entity
-@Table(name = "statuses")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class TransactionStatus {
-        
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @NotBlank(message = "Name are required")
-    private String name;
+public enum TransactionStatus {
+    PENDING("Pending"),
+    COMPLETED("Completed"),
+    FAILED("Failed");
+
+    private final String displayName;
+
+    TransactionStatus(String displayName) {
+        this.displayName = displayName;
+    }
+    public String getDisplayName() {
+        return displayName;
+    }
 }

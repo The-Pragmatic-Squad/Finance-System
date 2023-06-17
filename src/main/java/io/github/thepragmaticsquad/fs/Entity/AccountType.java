@@ -4,16 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
-@Entity
-@Table(name = "account_types")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AccountType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public enum AccountType {
+    VIP("vip Account"),
+    CREDIT("Credit Account");
 
-    @NotBlank(message = "nName are required")
-    private String name;
+    private final String displayName;
+
+    AccountType(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }
