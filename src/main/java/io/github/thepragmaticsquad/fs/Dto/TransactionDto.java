@@ -1,35 +1,29 @@
-package io.github.thepragmaticsquad.fs.Dto;
+package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.Entity.Account;
-import io.github.thepragmaticsquad.fs.Entity.AccountType;
-import io.github.thepragmaticsquad.fs.Entity.TransactionStatus;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import io.github.thepragmaticsquad.fs.entity.AccountType;
+import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class TransactionDto {
     private Long id;
 
-    @NotNull(message = "Transaction type is required")
-    private AccountType type ;
+    @NotNull(message = "account id is required")
+    private AccountAbstractedDto account;
 
     @NotNull(message = "Amount is required")
-    private Double amount ;
+    private BigDecimal amount;
 
     @NotNull(message = "Balance before transaction is required")
-    private Double balanceBefore;
+    private BigDecimal balanceBefore;
 
     @NotNull(message = "Balance after transaction is required")
-    private Double balanceAfter;
+    private BigDecimal balanceAfter;
 
     @NotNull(message = "Date is required")
     @PastOrPresent(message = "Date cannot be in the future")
-    private Date date ;
+    private LocalDateTime date;
 
-    @NotBlank(message = "Details are required")
-    private String details;
 }

@@ -1,37 +1,33 @@
-package io.github.thepragmaticsquad.fs.Dto;
+package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.Entity.AccountType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.sql.Date;
+import io.github.thepragmaticsquad.fs.entity.AccountType;
+import jakarta.validation.constraints.*;
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class AccountDto {
-    private Long id ;
+    private Long id;
 
     @NotBlank(message = "User name is required")
-    private String user_name;
-
+    private String username;
 
     @NotNull(message = "Balance is required")
-    @DecimalMin(value = "50", inclusive = false, message = "Balance must be greater than 0")
-    private Double balance ;
+    @DecimalMin(value = "50", inclusive = false, message = "Balance must be greater than 50")
+    private BigDecimal balance;
 
     @NotNull(message = "Created at date is required")
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
     @Null
-    private Date lastTransaction;
+    private LocalDateTime lastTransaction;
+
     @NotNull(message = "Account type is required")
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private AccountType type ;
-    private boolean isActive = true;
+    private AccountType type;
+
+    private boolean active = true;
 }

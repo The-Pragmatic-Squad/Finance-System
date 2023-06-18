@@ -1,9 +1,9 @@
-package io.github.thepragmaticsquad.fs.Entity;
+package io.github.thepragmaticsquad.fs.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import jakarta.persistence.*;
 import lombok.*;
-import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "accounts")
@@ -14,16 +14,17 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
-    private String user_name;
+    private Long id;
+    private String username;
     private String email;
+    private String password;
     private String phone;
-    private String credit_number ;
-    private Double balance ;
+    private String creditNumber;
+    private BigDecimal balance;
     private Date createdAt;
-    @Null
     private Date lastTransaction;
     @Enumerated(EnumType.STRING)
-    private AccountType type ;
-    private boolean isActive = true; 
+    private AccountType type;
+    @Column(name = "active",columnDefinition = "boolean default true")
+    private boolean active;
 }

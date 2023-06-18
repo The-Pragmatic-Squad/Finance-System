@@ -1,9 +1,4 @@
-package io.github.thepragmaticsquad.fs.Entity;
-
-import jakarta.persistence.*;
-import lombok.*;
-import jakarta.validation.constraints.*;
-
+package io.github.thepragmaticsquad.fs.entity;
 
 public enum TransactionType {
     DEPOSIT("Deposit"),

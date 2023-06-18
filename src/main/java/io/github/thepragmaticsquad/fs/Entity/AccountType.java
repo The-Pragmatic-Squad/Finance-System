@@ -1,12 +1,8 @@
-package io.github.thepragmaticsquad.fs.Entity;
-
-import jakarta.persistence.*;
-import lombok.*;
-import jakarta.validation.constraints.*;
+package io.github.thepragmaticsquad.fs.entity;
 
 public enum AccountType {
     VIP("vip Account"),
-    CREDIT("Credit Account");
+    STANDARD("Standard Account");
 
     private final String displayName;
 

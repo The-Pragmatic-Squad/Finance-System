@@ -1,5 +1,6 @@
-package io.github.thepragmaticsquad.fs.Entity;
+package io.github.thepragmaticsquad.fs.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,30 +12,27 @@ import jakarta.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
-    
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    private Date date ;
+    private Date date;
 
     @Enumerated(EnumType.STRING)
-    private TransactionType type ;
+    private TransactionType type;
 
     @Enumerated(EnumType.STRING)
-    private TransactionStatus status ;
+    private TransactionStatus status;
 
     @NotNull(message = "Amount is required")
-    private Double amount ;
+    private BigDecimal amount;
 
-    private Double balanceBefore;
+    private BigDecimal balanceBefore;
 
-    private Double balanceAfter;
-
-    private String details;
-
+    private BigDecimal balanceAfter;
 }

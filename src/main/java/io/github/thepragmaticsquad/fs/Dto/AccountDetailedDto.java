@@ -1,18 +1,21 @@
-package io.github.thepragmaticsquad.fs.Dto;
+package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.Entity.AccountType;
-import jakarta.persistence.*;
+import io.github.thepragmaticsquad.fs.entity.AccountType;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-
+import lombok.*;
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class AccountDetailedDto {
 
-    private Long id ;
+    private Long id;
     @NotBlank(message = "User name is required")
-    private String user_name;
+    private String username;
     @Email(message = "Invalid email address")
     @NotBlank(message = "Email is required")
     private String email;
@@ -21,15 +24,15 @@ public class AccountDetailedDto {
     private String phone;
     @Pattern(regexp = "\\d{16}", message = "Credit card number must be 16 digits")
     @NotBlank(message = "Credit card number is required")
-    private String credit_number ;
+    private String creditNumber;
     @NotNull(message = "Balance is required")
     @DecimalMin(value = "50", inclusive = false, message = "Balance must be greater than 0")
-    private Double balance ;
+    private BigDecimal balance;
     @NotNull(message = "Created at date is required")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @Null
-    private Date lastTransaction;
+    private LocalDateTime lastTransaction;
     @NotNull(message = "Account type is required")
-    private AccountType type ;
-    private boolean isActive = true;
+    private AccountType type;
+    private boolean active = true;
 }

@@ -1,7 +1,7 @@
 package io.github.thepragmaticsquad.fs.Controller;
 
-import io.github.thepragmaticsquad.fs.Dto.AccountDto;
-import io.github.thepragmaticsquad.fs.Service.AccountService;
+import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

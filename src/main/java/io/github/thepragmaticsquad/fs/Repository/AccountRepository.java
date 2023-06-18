@@ -1,9 +1,15 @@
-package io.github.thepragmaticsquad.fs.Repository;
+package io.github.thepragmaticsquad.fs.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import io.github.thepragmaticsquad.fs.entity.Account;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import io.github.thepragmaticsquad.fs.Entity.Account;
+import java.util.List;
 
-public interface AccountRepository extends JpaRepository<Account,Long>{
-    
+@Repository
+public interface AccountRepository extends JpaRepository<Account, Long> {
+
+    @Query("SELECT a FROM Account a WHERE a.active = true")
+    List<Account> findAllActiveAccounts();
 }
