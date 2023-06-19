@@ -20,6 +20,7 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+    @Column(name = "t_date")
 
     private Date date;
 
