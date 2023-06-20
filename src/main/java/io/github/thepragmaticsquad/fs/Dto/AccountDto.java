@@ -1,6 +1,6 @@
 package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.entity.AccountType;
+import io.github.thepragmaticsquad.fs.enums.AccountType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;

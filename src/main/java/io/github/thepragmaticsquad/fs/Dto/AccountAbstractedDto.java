@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,5 @@ public class AccountAbstractedDto {
     private BigDecimal balance;
 
     @NotNull(message = "Created at date is required")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

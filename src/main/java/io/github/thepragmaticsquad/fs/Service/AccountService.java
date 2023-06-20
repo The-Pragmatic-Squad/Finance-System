@@ -1,22 +1,38 @@
 package io.github.thepragmaticsquad.fs.service;
 
-import io.github.thepragmaticsquad.fs.dto.*;
+import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.entity.Account;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface AccountService {
-    public AccountDetailedDto createAccount(AccountDetailedDto account);
-    public AccountDetailedDto getAccountById(Long id);
-    public List<AccountDto> getAllAccounts();
-//    public List<AccountAbstractedDto> getAllTransactionAccounts();
-    public AccountDetailedDto updateAccount(AccountDetailedDto account);
-    public void deleteAccount(Long id);
-    public boolean isAccountActive(Long id);
-    public boolean isSufficientBalance(Long id, Double amount);
-    public boolean isCreditCardNumberValid(String credit_number);
-    public boolean isEmailValid(String email);
-    public boolean isPhoneNumberValid(String phone);
-    public void deposit(Long accountId, Double amount);
-    public void withdraw(Long accountId, Double amount);
-    public void transfer(Long fromAccountId, Long toAccountId, Double amount);
-    public List<TransactionDetailedDto> getTransactionsByAccount(Long accountId);
+    List<AccountDto> getAllAccounts();
+
+    List<AccountDetailedDto> getAllAccountsDetailed();
+
+    List<AccountAbstractedDto> getAllAccountsAbstracted();
+
+    AccountDetailedDto createAccount(Account account);
+
+    AccountDto getSpecificAccount(Long id);
+
+    AccountDetailedDto getSpecificAccountDetailed(Long id);
+
+    AccountAbstractedDto getSpecificAccountAbstracted(Long id);
+
+    AccountDetailedDto updateAccount(AccountDetailedDto account);
+
+    void deleteAccount(Long id);
+
+    boolean isAccountActive(Long id);
+
+    void deposit(Long id, BigDecimal amount);
+
+    void withdraw(Long id, BigDecimal amount);
+
+
 }

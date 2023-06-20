@@ -12,4 +12,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT a FROM Account a WHERE a.active = true")
     List<Account> findAllActiveAccounts();
+
+    Boolean getAccountByIdAndActiveTrue(Long id);
+
+
 }

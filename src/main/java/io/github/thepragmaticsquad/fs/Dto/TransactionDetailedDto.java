@@ -1,11 +1,16 @@
 package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.entity.AccountType;
-import io.github.thepragmaticsquad.fs.entity.TransactionStatus;
+import io.github.thepragmaticsquad.fs.enums.AccountType;
+import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
+import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import jakarta.validation.constraints.*;
+import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class TransactionDetailedDto {
     private Long id;
 
@@ -17,7 +22,7 @@ public class TransactionDetailedDto {
     private LocalDateTime date;
 
     @NotNull(message = "Transaction type is required")
-    private AccountType type;
+    private TransactionType type;
 
     @NotNull(message = "Transaction status is required")
     private TransactionStatus status;

@@ -1,10 +1,13 @@
 package io.github.thepragmaticsquad.fs.dto;
 
-import io.github.thepragmaticsquad.fs.entity.AccountType;
+import io.github.thepragmaticsquad.fs.enums.AccountType;
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data
@@ -34,5 +37,6 @@ public class AccountDetailedDto {
     private LocalDateTime lastTransaction;
     @NotNull(message = "Account type is required")
     private AccountType type;
+
     private boolean active = true;
 }

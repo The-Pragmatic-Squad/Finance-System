@@ -1,7 +1,9 @@
 package io.github.thepragmaticsquad.fs.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import io.github.thepragmaticsquad.fs.enums.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,16 +16,26 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
+
     private String email;
+
     private String password;
+
     private String phone;
+
     private String creditNumber;
+
     private BigDecimal balance;
-    private Date createdAt;
-    private Date lastTransaction;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime lastTransaction;
+
     @Enumerated(EnumType.STRING)
     private AccountType type;
+
     @Column(name = "active",columnDefinition = "boolean default true")
     private boolean active;
 }

@@ -1,4 +1,4 @@
-package io.github.thepragmaticsquad.fs.entity;
+package io.github.thepragmaticsquad.fs.enums;
 
 public enum AccountType {
     VIP("vip Account"),

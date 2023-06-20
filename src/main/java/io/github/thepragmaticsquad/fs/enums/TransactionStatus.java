@@ -1,8 +1,8 @@
-package io.github.thepragmaticsquad.fs.entity;
+package io.github.thepragmaticsquad.fs.enums;
 
 public enum TransactionStatus {
     PENDING("Pending"),
-    SUCCESS("Completed"),
+    SUCCESS("Success"),
     FAILED("Failed");
 
     private final String displayName;

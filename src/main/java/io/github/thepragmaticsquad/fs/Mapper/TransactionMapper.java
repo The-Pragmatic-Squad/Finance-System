@@ -1,34 +1,67 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.*;
+import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
-import io.github.thepragmaticsquad.fs.enums.AccountType;
-import org.mapstruct.*;
+import io.github.thepragmaticsquad.fs.entity.Transaction;
+import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
+import io.github.thepragmaticsquad.fs.enums.TransactionType;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+
 @Mapper(componentModel = "spring")
-public interface AccountMapper {
-    public static final AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
+public interface TransactionMapper {
+    public static final TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
-    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
-    AccountDto toDto(Account account);
 
-    AccountAbstractedDto toAbstractedDto(Account account);
+    @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
+    TransactionDto toDto(Transaction transaction);
 
-    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
-    AccountDetailedDto toDetailedDto(Account account);
+    @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
+    TransactionDetailedDto toDetailedDto(Transaction transaction);
 
-    Account toAccount(AccountAbstractedDto accountAbstractedDto);
+    @Mapping(source = "account", target = "account")
+    Transaction toTransaction(TransactionDto dto);
 
-    @Named("convertAccountTypeToString")
-    default String convertAccountTypeToString(AccountType accountType) {
-        return accountType != null ? accountType.name() : null;
+    @Mapping(source = "account", target = "account")
+    Transaction toTransaction(TransactionDetailedDto dto);
+
+    @Named("toAbstractedDto")
+    default AccountAbstractedDto toAbstractedDto(Account account) {
+        return AccountMapper.INSTANCE.toAbstractedDto(account);
     }
 
-    @Named("convertToAccountType")
-    default AccountType convertToAccountType(String accountTypeString) {
-        return accountTypeString != null ? AccountType.valueOf(accountTypeString) : null;
+    @Named("toAccount")
+    default Account toAccount(AccountAbstractedDto accountDto) {
+        return AccountMapper.INSTANCE.toAccount(accountDto);
     }
+
+    @Named("convertTransactionTypeToString")
+    default String convertTransactionTypeToString(TransactionType type) {
+        return type != null ? type.name() : null;
+    }
+
+    @Named("convertToTransactionType")
+    default TransactionType convertToTransactionType(String typeString) {
+        return typeString != null ? TransactionType.valueOf(typeString) : null;
+    }
+
+    @Named("convertTransactionStatusToString")
+    default String convertTransactionStatusToString(TransactionStatus status) {
+        return status != null ? status.name() : null;
+    }
+
+    @Named("convertToTransactionStatus")
+    default TransactionStatus convertToTransactionStatus(String statusString) {
+        return statusString != null ? TransactionStatus.valueOf(statusString) : null;
+    }
+
     @Mapping(target = "id", ignore = true)
-    void updateAccountFromDto(AccountDetailedDto dto, @MappingTarget Account account);
+    void updateTransactionFromDto(TransactionDetailedDto dto, @MappingTarget Transaction transaction);
+
 }

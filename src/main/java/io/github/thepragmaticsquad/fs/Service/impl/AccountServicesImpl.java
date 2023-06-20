@@ -1,101 +1,95 @@
 package io.github.thepragmaticsquad.fs.service.impl;
 
-import io.github.thepragmaticsquad.fs.dto.*;
+import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.mapper.AccountMapper;
 import io.github.thepragmaticsquad.fs.repository.AccountRepository;
 import io.github.thepragmaticsquad.fs.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class AccountServicesImpl implements AccountService {
-    private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
+    @Autowired
+    private AccountRepository accountRepository;
 
-    public AccountServicesImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
-        this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
+    public AccountDetailedDto createAccount(Account account) {
+        Account savedAccount = accountRepository.save(account);
+        return AccountMapper.INSTANCE.toDetailedDto(savedAccount);
     }
 
-    @Override
-    public AccountDetailedDto createAccount(AccountDetailedDto account) {
-        return null;
+    public AccountDto getSpecificAccount(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow();
+        return AccountMapper.INSTANCE.toDto(account);
     }
 
-    @Override
-    public AccountDetailedDto getAccountById(Long id) {
-        return null;
-    }
-
-    @Override
     public List<AccountDto> getAllAccounts() {
         List<Account> accounts = accountRepository.findAllActiveAccounts();
         return accounts.stream()
-                .map(data-> accountMapper.toDto(data))
+                .map(AccountMapper.INSTANCE::toDto)
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<AccountAbstractedDto> getAllTransactionAccounts() {
-//        List<Account> accounts = accountRepository.findAll();
-//        return accounts.stream()
-//                .map(AccountMappe::toAccountAbstractDto)
-//                .collect(Collectors.toList());    }
-
-    @Override
-    public AccountDetailedDto updateAccount(AccountDetailedDto account) {
-        return null;
+    public List<AccountDetailedDto> getAllAccountsDetailed() {
+        List<Account> accounts = accountRepository.findAllActiveAccounts();
+        return accounts.stream()
+                .map(AccountMapper.INSTANCE::toDetailedDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
+    public List<AccountAbstractedDto> getAllAccountsAbstracted() {
+        List<Account> accounts = accountRepository.findAllActiveAccounts();
+        return accounts.stream()
+                .map(AccountMapper.INSTANCE::toAbstractedDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+    public AccountDetailedDto getSpecificAccountDetailed(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow();
+        return AccountMapper.INSTANCE.toDetailedDto(account);
+    }
+
+    public AccountAbstractedDto getSpecificAccountAbstracted(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow();
+        return AccountMapper.INSTANCE.toAbstractedDto(account);
+    }
+
+    public AccountDetailedDto updateAccount(AccountDetailedDto accountDto) {
+        Account account = accountRepository.findById(accountDto.getId())
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+        AccountMapper.INSTANCE.updateAccountFromDto(accountDto, account);
+        account = accountRepository.save(account);
+        return AccountMapper.INSTANCE.toDetailedDto(account);
+    }
+
     public void deleteAccount(Long id) {
-
+        accountRepository.deleteById(id);
     }
 
-    @Override
     public boolean isAccountActive(Long id) {
-        return false;
+        return accountRepository.getAccountByIdAndActiveTrue(id);
     }
 
-    @Override
-    public boolean isSufficientBalance(Long id, Double amount) {
-        return false;
+    public void deposit(Long id, BigDecimal amount) {
+        Account account = accountRepository.findById(id).orElseThrow();
+        BigDecimal balance = account.getBalance();
+        BigDecimal deposit = balance.add(amount);
+        account.setBalance(deposit);
+        accountRepository.save(account);
     }
-
-    @Override
-    public boolean isCreditCardNumberValid(String credit_number) {
-        return false;
-    }
-
-    @Override
-    public boolean isEmailValid(String email) {
-        return false;
-    }
-
-    @Override
-    public boolean isPhoneNumberValid(String phone) {
-        return false;
-    }
-
-    @Override
-    public void deposit(Long accountId, Double amount) {
-
-    }
-
-    @Override
-    public void withdraw(Long accountId, Double amount) {
-
-    }
-
-    @Override
-    public void transfer(Long fromAccountId, Long toAccountId, Double amount) {
-
-    }
-
-    @Override
-    public List<TransactionDetailedDto> getTransactionsByAccount(Long accountId) {
-        return null;
+    public void withdraw(Long id, BigDecimal amount) {
+        Account account = accountRepository.findById(id).orElseThrow();
+        BigDecimal balance = account.getBalance();
+        BigDecimal withdraw = balance.subtract(amount);
+        account.setBalance(withdraw);
+        accountRepository.save(account);
     }
 }

@@ -1,7 +1,10 @@
 package io.github.thepragmaticsquad.fs.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
+import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
@@ -20,9 +23,8 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-    @Column(name = "t_date")
 
-    private Date date;
+    private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
@@ -30,7 +32,6 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
-    @NotNull(message = "Amount is required")
     private BigDecimal amount;
 
     private BigDecimal balanceBefore;
