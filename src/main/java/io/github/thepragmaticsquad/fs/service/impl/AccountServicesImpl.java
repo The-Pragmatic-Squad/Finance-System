@@ -1,13 +1,12 @@
 package io.github.thepragmaticsquad.fs.service.impl;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.mapper.AccountMapper;
 import io.github.thepragmaticsquad.fs.repository.AccountRepository;
 import io.github.thepragmaticsquad.fs.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,8 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountServicesImpl implements AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
+
+    private final AccountRepository accountRepository;
+
+    public AccountServicesImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public AccountDetailedDto createAccount(Account account) {
         Account savedAccount = accountRepository.save(account);
@@ -33,21 +36,21 @@ public class AccountServicesImpl implements AccountService {
         List<Account> accounts = accountRepository.findAllActiveAccounts();
         return accounts.stream()
                 .map(AccountMapper.INSTANCE::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AccountDetailedDto> getAllAccountsDetailed() {
         List<Account> accounts = accountRepository.findAllActiveAccounts();
         return accounts.stream()
                 .map(AccountMapper.INSTANCE::toDetailedDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<AccountAbstractedDto> getAllAccountsAbstracted() {
         List<Account> accounts = accountRepository.findAllActiveAccounts();
         return accounts.stream()
                 .map(AccountMapper.INSTANCE::toAbstractedDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

@@ -1,9 +1,8 @@
-package io.github.thepragmaticsquad.fs.dto;
+package io.github.thepragmaticsquad.fs.dto.account;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data

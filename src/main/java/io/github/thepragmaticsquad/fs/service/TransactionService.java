@@ -1,8 +1,8 @@
 package io.github.thepragmaticsquad.fs.service;
 
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDto;
-import io.github.thepragmaticsquad.fs.entity.Transaction;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionModel;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface TransactionService {
 
-    Long processTransaction(TransactionDetailedDto transaction);
+    Long processTransaction(SimpleTransactionModel transaction);
 
     TransactionDetailedDto getTransactionById(Long id);
 

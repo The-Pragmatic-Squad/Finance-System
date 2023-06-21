@@ -1,7 +1,8 @@
 package io.github.thepragmaticsquad.fs.service.impl;
 
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionModel;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.enums.AccountType;
@@ -31,9 +32,29 @@ public class TransactionServiceImpl implements TransactionService {
         return TransactionMapper.INSTANCE.toDto(savedTransaction);
     }
 
+//    @Override
+//    public Long processTransaction(TransactionDetailedDto transactionDetailedDto) {
+//        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(transactionDetailedDto);
+//        Account account = accountRepository.findById(transaction.getAccount().getId()).orElseThrow(
+//        );
+//
+//        BigDecimal balance = account.getBalance();
+//        BigDecimal transactionAmount = transaction.getAmount();
+//
+//        if (transactionAmount.compareTo(balance) < 0 && account.getType() == AccountType.STANDARD)
+//            throw new RuntimeException();
+//
+//        account.setBalance(balance.subtract(transactionAmount));
+//        accountRepository.save(account);
+//
+//        transaction = transactionsRepository.save(transaction);
+//
+//        return transaction.getId();
+//    }
+
     @Override
-    public Long processTransaction(TransactionDetailedDto transactionDetailedDto) {
-        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(transactionDetailedDto);
+    public Long processTransaction(SimpleTransactionModel simpleTransactionModel) {
+        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(simpleTransactionModel);
         Account account = accountRepository.findById(transaction.getAccount().getId()).orElseThrow(
         );
 
@@ -49,6 +70,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction = transactionsRepository.save(transaction);
 
         return transaction.getId();
+
     }
 
     public TransactionDetailedDto getTransactionById(Long id) {
