@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Table(name = "accounts")
@@ -36,6 +37,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
-    @Column(name = "active",columnDefinition = "boolean default true")
-    private boolean active;
+    private boolean active = true;
+    public void setPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
 }

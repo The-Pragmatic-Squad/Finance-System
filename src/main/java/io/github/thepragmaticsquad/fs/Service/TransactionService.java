@@ -11,10 +11,9 @@ import java.util.List;
 public interface TransactionService {
 
     Long processTransaction(TransactionDetailedDto transaction);
-
+    TransactionDto createTransaction(Transaction transaction);
     TransactionDetailedDto getTransactionById(Long id);
 
     List<TransactionDto> getAllTransactions();
 
-    void deleteTransactionById(Long id);
 }

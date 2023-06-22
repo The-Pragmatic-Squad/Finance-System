@@ -1,6 +1,7 @@
 package io.github.thepragmaticsquad.fs.dto;
 
 import io.github.thepragmaticsquad.fs.enums.AccountType;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,5 +39,6 @@ public class AccountDetailedDto {
     @NotNull(message = "Account type is required")
     private AccountType type;
 
+    @Column(name = "active",columnDefinition = "boolean default true")
     private boolean active = true;
 }

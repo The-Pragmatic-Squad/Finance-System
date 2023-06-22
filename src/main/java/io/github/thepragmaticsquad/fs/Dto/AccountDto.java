@@ -1,6 +1,7 @@
 package io.github.thepragmaticsquad.fs.dto;
 
 import io.github.thepragmaticsquad.fs.enums.AccountType;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -29,5 +30,6 @@ public class AccountDto {
     @NotNull(message = "Account type is required")
     private AccountType type;
 
+    @Column(name = "active",columnDefinition = "boolean default true")
     private boolean active = true;
 }

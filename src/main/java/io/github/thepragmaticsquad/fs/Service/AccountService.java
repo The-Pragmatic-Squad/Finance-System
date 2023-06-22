@@ -24,11 +24,9 @@ public interface AccountService {
 
     AccountAbstractedDto getSpecificAccountAbstracted(Long id);
 
-    AccountDetailedDto updateAccount(AccountDetailedDto account);
+    AccountDetailedDto updateAccount(Long id , AccountDetailedDto account);
 
     void deleteAccount(Long id);
-
-    boolean isAccountActive(Long id);
 
     void deposit(Long id, BigDecimal amount);
 

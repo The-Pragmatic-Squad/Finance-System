@@ -16,7 +16,7 @@ public class TransactionDto {
     private AccountAbstractedDto account;
 
     @NotNull
-    private TransactionType transactionType;
+    private TransactionType type;
 
     @NotNull(message = "Amount is required")
     private BigDecimal amount;

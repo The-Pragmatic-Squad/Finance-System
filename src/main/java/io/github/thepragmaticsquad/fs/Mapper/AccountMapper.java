@@ -17,6 +17,8 @@ public interface AccountMapper {
 
     @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
     AccountDetailedDto toDetailedDto(Account account);
+    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
+    Account toAccount(AccountDto accountDto);
 
     Account toAccount(AccountAbstractedDto accountAbstractedDto);
 

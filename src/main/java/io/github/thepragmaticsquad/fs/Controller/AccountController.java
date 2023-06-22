@@ -5,7 +5,6 @@ import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -14,8 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
     @GetMapping
     public List<AccountDto> getAllAccounts(){
         return accountService.getAllAccounts();
@@ -46,23 +49,24 @@ public class AccountController {
         return accountService.getSpecificAccountDetailed(id);
     }
 
-    public AccountAbstractedDto getSpecificAccountAbstracted(Long id) {
-        return null;
+    @GetMapping("/abstracted/{id}")
+    public AccountAbstractedDto getSpecificAccountAbstracted(@PathVariable("id") Long id) {
+        return accountService.getSpecificAccountAbstracted(id);
     }
 
-    public AccountDetailedDto updateAccount(AccountDetailedDto account) {
-        return null;
+    @PutMapping("/{id}")
+    public AccountDetailedDto updateAccount(@PathVariable("id") Long id, @RequestBody AccountDetailedDto account) {
+        return accountService.updateAccount(id,account);
     }
 
-    public void deleteAccount(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteAccount(@PathVariable("id")  Long id) {
+        accountService.deleteAccount(id);
     }
 
-    public boolean isAccountActive(Long id) {
-        return false;
-    }
-
-    public void deposit(Long id, BigDecimal amount) {
-
+    @PutMapping("/deposit/{id}")
+    public void deposit(@PathVariable("id") Long id,@RequestParam BigDecimal amount) {
+        accountService.deposit(id, amount);
     }
 
     public void withdraw(Long id, BigDecimal amount) {
