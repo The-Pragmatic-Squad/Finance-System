@@ -1,6 +1,6 @@
 package io.github.thepragmaticsquad.fs.service.impl;
 
-import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionModel;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
@@ -53,8 +53,8 @@ public class TransactionServiceImpl implements TransactionService {
 //    }
 
     @Override
-    public Long processTransaction(SimpleTransactionModel simpleTransactionModel) {
-        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(simpleTransactionModel);
+    public Long processTransaction(SimpleTransactionDto simpleTransactionDto) {
+        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(simpleTransactionDto);
         Account account = accountRepository.findById(transaction.getAccount().getId()).orElseThrow(
         );
 

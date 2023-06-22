@@ -1,6 +1,6 @@
 package io.github.thepragmaticsquad.fs.controller;
 
-import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionModel;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +18,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Long processTransaction(@RequestBody SimpleTransactionModel transactionDetailedDto) {
+    public Long processTransaction(@RequestBody SimpleTransactionDto transactionDetailedDto) {
         return transactionService.processTransaction(transactionDetailedDto);
     }
 }

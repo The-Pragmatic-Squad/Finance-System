@@ -1,6 +1,6 @@
 package io.github.thepragmaticsquad.fs.config;
 
- import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionModel;
+ import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
  import io.github.thepragmaticsquad.fs.service.TransactionService;
  import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ public class TransactionListener {
     }
 
     @RabbitListener(queues = RabbitMQConfig.TRANSACTION_QUEUE)
-    public void listener(SimpleTransactionModel transaction) {
+    public void listener(SimpleTransactionDto transaction) {
         logger.info("Received Message From RabbitMQ: " + transaction);
         System.out.println("Received Message From RabbitMQ: " + transaction);
 
