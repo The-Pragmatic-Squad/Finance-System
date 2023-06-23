@@ -51,8 +51,12 @@ public class AccountServicesImpl implements AccountService {
         savedAccount.setType(accountType);
 
         // Set credit number to a random value if it is not provided
-        Optional<String> creditNumber = Optional.ofNullable(account.getCreditNumber()).filter(s -> !s.isBlank());
-        if (creditNumber.isEmpty()) {
+        if (account.getCreditNumber() != null && account.getType() == AccountType.VIP ){
+            if (accountRepository.findAccountByCreditNumber(account.getCreditNumber()) == null){
+            savedAccount.setCreditNumber(account.getCreditNumber());
+        }
+        }
+        else {
             String randomNumber = generateRandomNumber(30);
             savedAccount.setCreditNumber(randomNumber);
         }
