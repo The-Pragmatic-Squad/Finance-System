@@ -1,7 +1,6 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
 import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
@@ -31,9 +30,6 @@ public interface TransactionMapper {
 
     @Mapping(source = "account", target = "account")
     Transaction toTransaction(TransactionDetailedDto dto);
-
-    @Mapping(source = "accountId", target = "account.id")
-    Transaction toTransaction(SimpleTransactionDto dto);
 
     @Named("toAbstractedDto")
     default AccountAbstractedDto toAbstractedDto(Account account) {

@@ -1,9 +1,9 @@
 package io.github.thepragmaticsquad.fs.service.impl;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.enums.AccountType;

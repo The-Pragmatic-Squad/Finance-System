@@ -1,8 +1,8 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import org.mapstruct.*;
@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
-    public static final AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
+    AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
     @Mapping(source = "type", target = "type", qualifiedByName = "convertToAccountType")
     AccountDto toAccountDto(Account account);

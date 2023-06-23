@@ -1,8 +1,8 @@
 package io.github.thepragmaticsquad.fs.controller;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,7 @@
 package io.github.thepragmaticsquad.fs.controller;
 
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDto;
-import io.github.thepragmaticsquad.fs.entity.Transaction;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +17,7 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-//    @PostMapping
-//    public Long processTransaction(@RequestBody TransactionDetailedDto transactionDetailedDto) {
-//        return transactionService.processTransaction(transactionDetailedDto);
-//    }
-//    @PostMapping
-//    public TransactionDto createTransaction(@RequestBody Transaction transaction){
-//        return transactionService.createTransaction(transaction);
-//    }
+
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
         return transactionService.getAllTransactions();

@@ -1,8 +1,8 @@
 package io.github.thepragmaticsquad.fs.service;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 
 import java.math.BigDecimal;
@@ -15,12 +15,9 @@ public interface AccountService {
 
     List<AccountAbstractedDto> getAllAccountsAbstracted();
 
-    //     TODO Return Id
     Long createAccount(AccountDetailedDto account);
 
-    //     TODO GetAccount
     AccountDto getAccount(Long id);
-//     TODO GetAccountDetailed
 
     AccountDetailedDto getAccountDetailed(Long id);
 
