@@ -3,6 +3,7 @@ package io.github.thepragmaticsquad.fs.controller;
 import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +66,7 @@ public class AccountController {
     }
 
     @PostMapping("/transaction/{id}")
-    public Long addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
+    public TransactionStatus addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
         return accountService.addTransaction(id, type, amount);
     }
 

@@ -27,6 +27,7 @@ public class TransactionDto {
 
     @NotNull
     private TransactionStatus status;
+
     @NotNull(message = "Amount is required")
     private BigDecimal amount;
 

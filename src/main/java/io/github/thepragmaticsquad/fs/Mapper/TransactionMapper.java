@@ -20,6 +20,7 @@ public interface TransactionMapper {
 
 
     @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
+    @Mapping(source = "status", target = "status")
     TransactionDto toDto(Transaction transaction);
 
     @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")

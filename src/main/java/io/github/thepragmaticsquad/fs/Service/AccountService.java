@@ -3,6 +3,7 @@ package io.github.thepragmaticsquad.fs.service;
 import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDto;
+import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 
 import java.math.BigDecimal;
@@ -30,6 +31,6 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
-    Long addTransaction(Long accountId, TransactionType type, BigDecimal amount);
+    TransactionStatus addTransaction(Long accountId, TransactionType type, BigDecimal amount);
 
 }
