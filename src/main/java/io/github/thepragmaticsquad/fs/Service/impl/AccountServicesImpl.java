@@ -144,7 +144,7 @@ public class AccountServicesImpl implements AccountService {
         accountRepository.save(account);
     }
 
-    public void addTransaction(Long accountId, TransactionType type, BigDecimal amount) {
+    public Long addTransaction(Long accountId, TransactionType type, BigDecimal amount) {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException("Account not found or already deleted"));
         TransactionDetailedDto transaction = new TransactionDetailedDto();
         Transaction saveTransaction = TransactionMapper.INSTANCE.toTransaction(transaction);
@@ -168,6 +168,6 @@ public class AccountServicesImpl implements AccountService {
         account.setLastTransaction(LocalDateTime.now());
         accountRepository.save(account);
         saveTransaction.setBalanceAfter(account.getBalance());
-        transactionsRepository.save(saveTransaction);
+        return transactionsRepository.save(saveTransaction).getId();
     }
 }

@@ -30,6 +30,6 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
-    void addTransaction(Long accountId, TransactionType type, BigDecimal amount);
+    Long addTransaction(Long accountId, TransactionType type, BigDecimal amount);
 
 }

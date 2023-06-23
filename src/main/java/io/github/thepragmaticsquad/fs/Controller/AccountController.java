@@ -65,8 +65,8 @@ public class AccountController {
     }
 
     @PostMapping("/transaction/{id}")
-    public void addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
-        accountService.addTransaction(id, type, amount);
+    public Long addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
+        return accountService.addTransaction(id, type, amount);
     }
 
 

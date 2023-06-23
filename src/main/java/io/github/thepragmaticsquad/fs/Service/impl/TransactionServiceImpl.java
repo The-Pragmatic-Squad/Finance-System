@@ -4,7 +4,6 @@ import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.mapper.TransactionMapper;
-import io.github.thepragmaticsquad.fs.repository.AccountRepository;
 import io.github.thepragmaticsquad.fs.repository.TransactionsRepository;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionsRepository transactionsRepository;
 
-    public TransactionServiceImpl(TransactionsRepository transactionsRepository, AccountRepository accountRepository) {
+    public TransactionServiceImpl(TransactionsRepository transactionsRepository) {
         this.transactionsRepository = transactionsRepository;
     }
 
