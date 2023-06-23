@@ -3,6 +3,7 @@ package io.github.thepragmaticsquad.fs.service.impl;
 import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
@@ -144,7 +145,11 @@ public class AccountServicesImpl implements AccountService {
         accountRepository.save(account);
     }
 
-    public void addTransaction(Long accountId, TransactionType type, BigDecimal amount) {
+    public void processTransaction(SimpleTransactionDto transactionDto) {
+        Long accountId = transactionDto.getAccountId();
+        BigDecimal amount = transactionDto.getAmount();
+        TransactionType type = transactionDto.getType();
+
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException("Account not found or already deleted"));
         TransactionDetailedDto transaction = new TransactionDetailedDto();
         Transaction saveTransaction = TransactionMapper.INSTANCE.toTransaction(transaction);

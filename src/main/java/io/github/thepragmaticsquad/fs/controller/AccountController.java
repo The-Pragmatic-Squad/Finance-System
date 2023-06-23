@@ -3,11 +3,10 @@ package io.github.thepragmaticsquad.fs.controller;
 import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
-import io.github.thepragmaticsquad.fs.enums.TransactionType;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -64,9 +63,10 @@ public class AccountController {
         accountService.deleteAccount(id);
     }
 
-    @PostMapping("/transaction/{id}")
-    public void addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
-        accountService.addTransaction(id, type, amount);
+    @PostMapping("{id}/transactions/")
+    public void processTransaction(@PathVariable("id") Long id, @RequestBody SimpleTransactionDto transactionDto) {
+        transactionDto.setAccountId(id);
+        accountService.processTransaction(transactionDto);
     }
 
 
