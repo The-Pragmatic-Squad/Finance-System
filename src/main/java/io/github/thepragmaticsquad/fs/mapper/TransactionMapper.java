@@ -1,8 +1,9 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.SimpleTransactionDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
@@ -16,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface TransactionMapper {
-    public static final TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
+    TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
 
     @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
@@ -30,6 +31,9 @@ public interface TransactionMapper {
 
     @Mapping(source = "account", target = "account")
     Transaction toTransaction(TransactionDetailedDto dto);
+
+    @Mapping(source = "accountId", target = "account.id")
+    Transaction toTransaction(SimpleTransactionDto dto);
 
     @Named("toAbstractedDto")
     default AccountAbstractedDto toAbstractedDto(Account account) {

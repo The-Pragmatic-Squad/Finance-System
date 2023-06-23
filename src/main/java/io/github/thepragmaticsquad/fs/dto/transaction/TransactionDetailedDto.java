@@ -1,10 +1,15 @@
-package io.github.thepragmaticsquad.fs.dto;
+package io.github.thepragmaticsquad.fs.dto.transaction;
 
-import io.github.thepragmaticsquad.fs.enums.AccountType;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package io.github.thepragmaticsquad.fs.dto;
+package io.github.thepragmaticsquad.fs.dto.account;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

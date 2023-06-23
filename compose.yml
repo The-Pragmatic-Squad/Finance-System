@@ -1,0 +1,31 @@
+version: '3.8' # Version of docker-compose
+
+# Services/Containers to be run
+services:
+
+  app:
+    container_name: finance_system
+    image: finance_system
+    build: ./ # Path to Dockerfile
+    ports:
+      - "9000:9000" # Port exposed to host:port exposed in container
+    depends_on:
+        - PostgreSQL_DB
+        - rabbitmq
+
+  rabbitmq:
+    image: 'rabbitmq:latest'
+    environment:
+      - 'RABBITMQ_DEFAULT_USER=guest'
+      - 'RABBITMQ_DEFAULT_PASS=guest'
+    ports:
+      - '5672'
+
+  PostgreSQL_DB:
+    image: postgres:alpine # PostgreSQL image, alpine version (lightweight)
+    ports:
+      - "6000:5432" # Port exposed to host:port exposed in container
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: finance_system

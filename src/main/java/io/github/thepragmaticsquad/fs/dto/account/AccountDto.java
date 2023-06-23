@@ -1,4 +1,4 @@
-package io.github.thepragmaticsquad.fs.dto;
+package io.github.thepragmaticsquad.fs.dto.account;
 
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import lombok.AllArgsConstructor;
