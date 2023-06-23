@@ -1,12 +1,14 @@
 package io.github.thepragmaticsquad.fs.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "accounts")
@@ -37,7 +39,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
-    private boolean active = true;
+    private boolean active;
+
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }

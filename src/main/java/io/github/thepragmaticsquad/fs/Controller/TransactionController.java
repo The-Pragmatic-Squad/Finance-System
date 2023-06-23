@@ -22,10 +22,10 @@ public class TransactionController {
 //    public Long processTransaction(@RequestBody TransactionDetailedDto transactionDetailedDto) {
 //        return transactionService.processTransaction(transactionDetailedDto);
 //    }
-    @PostMapping
-    public TransactionDto createTransaction(@RequestBody Transaction transaction){
-        return transactionService.createTransaction(transaction);
-    }
+//    @PostMapping
+//    public TransactionDto createTransaction(@RequestBody Transaction transaction){
+//        return transactionService.createTransaction(transaction);
+//    }
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
         return transactionService.getAllTransactions();
@@ -35,7 +35,9 @@ public class TransactionController {
     public TransactionDetailedDto getTransactionById(@PathVariable("id") Long id) {
         return transactionService.getTransactionById(id);
     }
-
-
+    @GetMapping("/account/{accountId}")
+    List<TransactionDto> getTransactionsByAccountId(@PathVariable("accountId")Long accountId){
+        return transactionService.getTransactionsByAccountId(accountId);
+    }
 
 }

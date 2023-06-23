@@ -3,7 +3,7 @@ package io.github.thepragmaticsquad.fs.controller;
 import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDto;
-import io.github.thepragmaticsquad.fs.entity.Account;
+import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<AccountDto> getAllAccounts(){
+    public List<AccountDto> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
@@ -35,42 +35,39 @@ public class AccountController {
     }
 
     @PostMapping
-    public AccountDetailedDto createAccount(@RequestBody Account account) {
+    public Long createAccount(@RequestBody AccountDetailedDto account) {
         return accountService.createAccount(account);
     }
 
     @GetMapping("/{id}")
-    public AccountDto getSpecificAccount(@PathVariable("id") Long id) {
-        return accountService.getSpecificAccount(id);
+    public AccountDto getAccount(@PathVariable("id") Long id) {
+        return accountService.getAccount(id);
     }
 
     @GetMapping("/detailed/{id}")
-    public AccountDetailedDto getSpecificAccountDetailed(@PathVariable("id") Long id) {
-        return accountService.getSpecificAccountDetailed(id);
+    public AccountDetailedDto getAccountDetailed(@PathVariable("id") Long id) {
+        return accountService.getAccountDetailed(id);
     }
 
     @GetMapping("/abstracted/{id}")
-    public AccountAbstractedDto getSpecificAccountAbstracted(@PathVariable("id") Long id) {
-        return accountService.getSpecificAccountAbstracted(id);
+    public AccountAbstractedDto getAccountAbstracted(@PathVariable("id") Long id) {
+        return accountService.getAccountAbstracted(id);
     }
 
     @PutMapping("/{id}")
-    public AccountDetailedDto updateAccount(@PathVariable("id") Long id, @RequestBody AccountDetailedDto account) {
-        return accountService.updateAccount(id,account);
+    public AccountDto updateAccount(@PathVariable("id") Long id, @RequestBody AccountDetailedDto account) {
+        return accountService.updateAccount(id, account);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAccount(@PathVariable("id")  Long id) {
+    public void deleteAccount(@PathVariable("id") Long id) {
         accountService.deleteAccount(id);
     }
 
-    @PutMapping("/deposit/{id}")
-    public void deposit(@PathVariable("id") Long id,@RequestParam BigDecimal amount) {
-        accountService.deposit(id, amount);
+    @PostMapping("/transaction/{id}")
+    public void addTransaction(@PathVariable("id") Long id, @RequestParam TransactionType type, @RequestParam BigDecimal amount) {
+        accountService.addTransaction(id, type, amount);
     }
 
-    public void withdraw(Long id, BigDecimal amount) {
-
-    }
 
 }

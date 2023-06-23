@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class AccountDetailedDto {
 
     private Long id;
@@ -23,6 +21,8 @@ public class AccountDetailedDto {
     @Email(message = "Invalid email address")
     @NotBlank(message = "Email is required")
     private String email;
+    @NotBlank(message = "Password is reqired")
+    private String password;
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     @NotBlank(message = "Phone number is required")
     private String phone;
@@ -37,8 +37,8 @@ public class AccountDetailedDto {
     @Null
     private LocalDateTime lastTransaction;
     @NotNull(message = "Account type is required")
-    private AccountType type;
-
-    @Column(name = "active",columnDefinition = "boolean default true")
+    private AccountType type = AccountType.STANDARD;
+    @Column(name = "active", columnDefinition = "boolean default true")
     private boolean active = true;
+
 }

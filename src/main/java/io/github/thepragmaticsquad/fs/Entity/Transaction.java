@@ -3,11 +3,11 @@ package io.github.thepragmaticsquad.fs.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "transactions")
@@ -22,9 +22,10 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
 
-    private LocalDateTime date;
+    private LocalDateTime date ;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;

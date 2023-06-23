@@ -7,10 +7,10 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class TransactionDetailedDto {
     private Long id;
 
@@ -19,7 +19,7 @@ public class TransactionDetailedDto {
 
     @NotNull(message = "Date is required")
     @PastOrPresent(message = "Date cannot be in the future")
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
     @NotNull(message = "Transaction type is required")
     private TransactionType type;

@@ -7,7 +7,10 @@ import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 

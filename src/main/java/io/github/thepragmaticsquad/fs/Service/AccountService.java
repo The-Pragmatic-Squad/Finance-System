@@ -3,8 +3,7 @@ package io.github.thepragmaticsquad.fs.service;
 import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
 import io.github.thepragmaticsquad.fs.dto.AccountDto;
-import io.github.thepragmaticsquad.fs.dto.TransactionDetailedDto;
-import io.github.thepragmaticsquad.fs.entity.Account;
+import io.github.thepragmaticsquad.fs.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,21 +15,21 @@ public interface AccountService {
 
     List<AccountAbstractedDto> getAllAccountsAbstracted();
 
-    AccountDetailedDto createAccount(Account account);
+    //     TODO Return Id
+    Long createAccount(AccountDetailedDto account);
 
-    AccountDto getSpecificAccount(Long id);
+    //     TODO GetAccount
+    AccountDto getAccount(Long id);
+//     TODO GetAccountDetailed
 
-    AccountDetailedDto getSpecificAccountDetailed(Long id);
+    AccountDetailedDto getAccountDetailed(Long id);
 
-    AccountAbstractedDto getSpecificAccountAbstracted(Long id);
+    AccountAbstractedDto getAccountAbstracted(Long id);
 
-    AccountDetailedDto updateAccount(Long id , AccountDetailedDto account);
+    AccountDto updateAccount(Long id, AccountDetailedDto account);
 
     void deleteAccount(Long id);
 
-    void deposit(Long id, BigDecimal amount);
-
-    void withdraw(Long id, BigDecimal amount);
-
+    void addTransaction(Long accountId, TransactionType type, BigDecimal amount);
 
 }

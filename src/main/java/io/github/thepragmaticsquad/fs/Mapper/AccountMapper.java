@@ -1,6 +1,8 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.*;
+import io.github.thepragmaticsquad.fs.dto.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.AccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import org.mapstruct.*;
@@ -10,17 +12,21 @@ import org.mapstruct.factory.Mappers;
 public interface AccountMapper {
     public static final AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
-    AccountDto toDto(Account account);
+    @Mapping(source = "type", target = "type", qualifiedByName = "convertToAccountType")
+    AccountDto toAccountDto(Account account);
+
+    @InheritInverseConfiguration
+    Account toAccount(AccountDto accountDto);
+
+    @Mapping(source = "type", target = "type", qualifiedByName = "convertToAccountType")
+    AccountDetailedDto toDetailedDto(Account account);
+
+    @InheritInverseConfiguration
+    Account toAccount(AccountDetailedDto account);
 
     AccountAbstractedDto toAbstractedDto(Account account);
 
-    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
-    AccountDetailedDto toDetailedDto(Account account);
-    @Mapping(source = "type", target = "type", qualifiedByName = "convertAccountTypeToString")
-    Account toAccount(AccountDto accountDto);
-
-    Account toAccount(AccountAbstractedDto accountAbstractedDto);
+    Account toAccount(AccountAbstractedDto accountDto);
 
     @Named("convertAccountTypeToString")
     default String convertAccountTypeToString(AccountType accountType) {
@@ -31,6 +37,7 @@ public interface AccountMapper {
     default AccountType convertToAccountType(String accountTypeString) {
         return accountTypeString != null ? AccountType.valueOf(accountTypeString) : null;
     }
+
     @Mapping(target = "id", ignore = true)
     void updateAccountFromDto(AccountDetailedDto dto, @MappingTarget Account account);
 }
