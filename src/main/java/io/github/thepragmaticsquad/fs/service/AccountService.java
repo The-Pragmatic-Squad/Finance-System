@@ -24,7 +24,7 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
-    void processTransaction(SimpleTransactionDto transactionDto);
+    TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto);
 
     List<TransactionDetailsDto> getTransactionsByAccountId(Long id);
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -64,7 +65,12 @@ public class AccountController {
     @PostMapping("{id}/transactions")
     public ResponseEntity<String> processTransaction(@PathVariable("id") Long id, @RequestBody @Valid CreateTransactionDto transactionDto) {
         transactionDto.setAccountId(id);
-        accountService.processTransaction(transactionDto);
+        TransactionDetailsDto transaction = accountService.processTransaction(transactionDto);
+        String uri = String.format("accounts/%1$d/transactions/%2$d", id, transaction.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(uri));
+        headers.set("TransactionStatus", transaction.getStatus().toString());
+        return new ResponseEntity<>(transaction.getStatus().toString(), headers, HttpStatus.CREATED);
     }
     @GetMapping("{id}/transactions")
     public List<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("id") Long id){

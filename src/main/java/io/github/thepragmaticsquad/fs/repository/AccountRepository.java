@@ -14,8 +14,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findAccountsByActiveTrue();
 
     Optional<Account> findAccountByIdAndActiveTrue(Long id);
-    @Query("SELECT a FROM Account a WHERE a.email = ?1 OR a.username = ?2")
-    Optional<Account> findAccountByEmailOrUsername(String email,String username);
 
+    @Query("SELECT a FROM Account a WHERE a.email = ?1 OR a.username = ?2")
+    Optional<Account> findAccountByEmailOrUsername(String email, String username);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM accounts WHERE id = ?1 FOR UPDATE")
     Optional<Account> findAccountByIdIs(Long id);
 }

@@ -49,7 +49,9 @@ public class AccountServicesImpl implements AccountService {
 
 
         Account savedAccount = AccountMapper.INSTANCE.toAccount(account);
-
+        if (account.getBalance() == null) {
+            account.setBalance(BigDecimal.ZERO);
+        }
         savedAccount.setCreatedAt(LocalDateTime.now());
         savedAccount.setActive(account.getBalance().compareTo(BigDecimal.ZERO) > 0);
         savedAccount.setCreditNumber(cardIssuer.issueCreditCard());
@@ -104,7 +106,8 @@ public class AccountServicesImpl implements AccountService {
         account.setActive(false);
         accountRepository.save(account);
     }
-    @Transactional
+
+
     public TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto) {
 
         Account account = accountRepository.findAccountByIdIs(transactionDto.getAccountId())
@@ -119,7 +122,12 @@ public class AccountServicesImpl implements AccountService {
         }
 
         accountRepository.save(account);
-        saveTransaction.setBalanceAfter(account.getBalance());
-        transactionsRepository.save(saveTransaction);
+
+        return transaction;
+    }
+
+    @Override
+    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
+        return transactionService.getTransactionsByAccountId(id);
     }
 }

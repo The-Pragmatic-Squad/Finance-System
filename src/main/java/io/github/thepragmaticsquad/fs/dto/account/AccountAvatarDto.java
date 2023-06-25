@@ -20,6 +20,5 @@ public class AccountAvatarDto {
     private String username;
     private BigDecimal balance;
 
-    @NotNull(message = "Created at date is required")
     private LocalDateTime createdAt;
 }
