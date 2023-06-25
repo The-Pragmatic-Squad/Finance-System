@@ -14,9 +14,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SimpleTransactionDto {
+public class CreateTransactionDto {
 
-    @NotNull(message = "Account is required")
     private Long accountId;
 
     @NotNull(message = "Transaction type is required")

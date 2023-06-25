@@ -1,13 +1,15 @@
 package io.github.thepragmaticsquad.fs.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
@@ -17,7 +19,11 @@ import lombok.*;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "transactions_id_seq",
+            sequenceName = "transactions_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transactions_id_seq")
     private Long id;
 
     @ManyToOne
@@ -25,17 +31,26 @@ public class Transaction {
     @JsonIgnore
     private Account account;
 
-    private LocalDateTime date ;
+    @Column(name = "transaction_date")
+    private LocalDateTime date;
 
+    @Column(name = "transaction_type")
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
+    private String description;
+
+    private String details;
+    @Column(columnDefinition = "numeric")
     private BigDecimal amount;
 
+    @Column(name = "balance_before", columnDefinition = "numeric")
     private BigDecimal balanceBefore;
 
+    @Column(name = "balance_after", columnDefinition = "numeric")
     private BigDecimal balanceAfter;
 }

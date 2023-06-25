@@ -1,7 +1,7 @@
 package io.github.thepragmaticsquad.fs.dto.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAvatarDto;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class TransactionDto {
 
     @NotNull(message = "account id is required")
     @JsonIgnore
-    private AccountAbstractedDto account;
+    private AccountAvatarDto account;
 
     @NotNull
     private TransactionType type;

@@ -1,8 +1,6 @@
 package io.github.thepragmaticsquad.fs.dto.account;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import io.github.thepragmaticsquad.fs.enums.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAbstractedDto {
+public class AccountAvatarDto {
     private Long id;
 
-    @NotBlank(message = "User name is required")
+    private AccountType type;
+    private String email;
+    private Boolean active;
     private String username;
-
-    @DecimalMin(value = "50", inclusive = false, message = "Balance must be greater than 0")
     private BigDecimal balance;
 
     @NotNull(message = "Created at date is required")

@@ -15,7 +15,7 @@ public class AccountDto {
     private Long id;
     private String username;
     private BigDecimal balance;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     private LocalDateTime lastTransaction;
     private AccountType type;
     private boolean active;

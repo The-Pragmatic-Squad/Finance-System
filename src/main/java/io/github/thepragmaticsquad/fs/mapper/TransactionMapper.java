@@ -1,16 +1,14 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAvatarDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.CreateTransactionDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.entity.Transaction;
 import io.github.thepragmaticsquad.fs.enums.TransactionStatus;
 import io.github.thepragmaticsquad.fs.enums.TransactionType;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 
@@ -18,26 +16,26 @@ import org.mapstruct.factory.Mappers;
 public interface TransactionMapper {
     TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
-
     @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
     TransactionDto toDto(Transaction transaction);
 
     @Mapping(source = "account", target = "account", qualifiedByName = "toAbstractedDto")
-    TransactionDetailedDto toDetailedDto(Transaction transaction);
+    TransactionDetailsDto toDetailsDto(Transaction transaction);
+
 
     @Mapping(source = "account", target = "account")
-    Transaction toTransaction(TransactionDto dto);
+    Transaction toTransaction(TransactionDetailsDto dto);
 
-    @Mapping(source = "account", target = "account")
-    Transaction toTransaction(TransactionDetailedDto dto);
+    @Mapping(source = "accountId", target = "account.id")
+    Transaction toTransaction(CreateTransactionDto dto);
 
     @Named("toAbstractedDto")
-    default AccountAbstractedDto toAbstractedDto(Account account) {
+    default AccountAvatarDto toAbstractedDto(Account account) {
         return AccountMapper.INSTANCE.toAbstractedDto(account);
     }
 
     @Named("toAccount")
-    default Account toAccount(AccountAbstractedDto accountDto) {
+    default Account toAccount(AccountAvatarDto accountDto) {
         return AccountMapper.INSTANCE.toAccount(accountDto);
     }
 
@@ -61,7 +59,5 @@ public interface TransactionMapper {
         return statusString != null ? TransactionStatus.valueOf(statusString) : null;
     }
 
-    @Mapping(target = "id", ignore = true)
-    void updateTransactionFromDto(TransactionDetailedDto dto, @MappingTarget Transaction transaction);
 
 }

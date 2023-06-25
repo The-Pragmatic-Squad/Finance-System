@@ -1,8 +1,9 @@
 package io.github.thepragmaticsquad.fs.mapper;
 
-import io.github.thepragmaticsquad.fs.dto.account.AccountAbstractedDto;
-import io.github.thepragmaticsquad.fs.dto.account.AccountDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.account.AccountAvatarDto;
 import io.github.thepragmaticsquad.fs.dto.account.AccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.CreateAccountDto;
+import io.github.thepragmaticsquad.fs.dto.account.UpdateAccountDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
 import io.github.thepragmaticsquad.fs.enums.AccountType;
 import org.mapstruct.*;
@@ -19,14 +20,14 @@ public interface AccountMapper {
     Account toAccount(AccountDto accountDto);
 
     @Mapping(source = "type", target = "type", qualifiedByName = "convertToAccountType")
-    AccountDetailedDto toDetailedDto(Account account);
+    CreateAccountDto toDetailedDto(Account account);
 
     @InheritInverseConfiguration
-    Account toAccount(AccountDetailedDto account);
+    Account toAccount(CreateAccountDto account);
 
-    AccountAbstractedDto toAbstractedDto(Account account);
+    AccountAvatarDto toAbstractedDto(Account account);
 
-    Account toAccount(AccountAbstractedDto accountDto);
+    Account toAccount(AccountAvatarDto accountDto);
 
     @Named("convertAccountTypeToString")
     default String convertAccountTypeToString(AccountType accountType) {
@@ -39,5 +40,21 @@ public interface AccountMapper {
     }
 
     @Mapping(target = "id", ignore = true)
-    void updateAccountFromDto(AccountDetailedDto dto, @MappingTarget Account account);
+    void updateAccountFromDto(@MappingTarget Account account, UpdateAccountDto dto);
+
+    @BeforeMapping
+    default void updateNotNullableFields(@MappingTarget Account account, UpdateAccountDto dto) {
+        if (dto.getType() == null) {
+            dto.setType(account.getType());
+        }
+        if (dto.getPassword() == null) {
+            dto.setPassword(account.getPassword());
+        }
+        if (dto.getPhone() == null) {
+            dto.setPhone(account.getPhone());
+        }
+        if (dto.getEmail() == null) {
+            dto.setEmail(account.getEmail());
+        }
+    }
 }

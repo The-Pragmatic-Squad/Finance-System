@@ -1,7 +1,7 @@
 package io.github.thepragmaticsquad.fs.controller;
 
-import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
-import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
+
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TransactionController {
 
 
@@ -19,16 +20,16 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<TransactionDto> getAllTransactions() {
+    public List<TransactionDetailsDto> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @GetMapping("/{id}")
-    public TransactionDetailedDto getTransactionById(@PathVariable("id") Long id) {
+    public TransactionDetailsDto getTransactionById(@PathVariable("id") Long id) {
         return transactionService.getTransactionById(id);
     }
     @GetMapping("/account/{accountId}")
-    List<TransactionDto> getTransactionsByAccountId(@PathVariable("accountId")Long accountId){
+    List<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("accountId")Long accountId){
         return transactionService.getTransactionsByAccountId(accountId);
     }
 

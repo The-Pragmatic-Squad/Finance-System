@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.math.BigDecimal;
@@ -15,9 +16,16 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "password")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "accounts_id_seq",
+            sequenceName = "accounts_id_seq",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accounts_id_seq")
     private Long id;
 
     private String username;
@@ -28,18 +36,24 @@ public class Account {
 
     private String phone;
 
+    @Column(name = "credit_number")
     private String creditNumber;
 
+    @Column(name = "balance", columnDefinition = "numeric")
     private BigDecimal balance;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "last_transaction")
     private LocalDateTime lastTransaction;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "account_type")
     private AccountType type;
 
     private boolean active;
+
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());

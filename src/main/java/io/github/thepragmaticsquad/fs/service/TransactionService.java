@@ -1,7 +1,9 @@
 package io.github.thepragmaticsquad.fs.service;
 
-import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDto;
-import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailedDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.CreateTransactionDto;
+import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
+import io.github.thepragmaticsquad.fs.entity.Account;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +11,11 @@ import java.util.List;
 @Service
 public interface TransactionService {
 
-    TransactionDetailedDto getTransactionById(Long id);
+    TransactionDetailsDto getTransactionById(Long id);
 
-    List<TransactionDto> getAllTransactions();
+    List<TransactionDetailsDto> getAllTransactions();
 
-    List<TransactionDto> getTransactionsByAccountId(Long accountId);
+    List<TransactionDetailsDto> getTransactionsByAccountId(Long accountId);
+
+    TransactionDetailsDto processTransaction(Account account, CreateTransactionDto createTransactionDto);
 }
