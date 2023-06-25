@@ -47,4 +47,3 @@ jobs:
 
       - name: Fake deploy
         run: ls Finance-System*.jar
-
