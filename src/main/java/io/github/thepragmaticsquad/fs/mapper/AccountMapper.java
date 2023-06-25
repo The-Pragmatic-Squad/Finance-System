@@ -40,10 +40,14 @@ public interface AccountMapper {
     }
 
     @Mapping(target = "id", ignore = true)
+
     void updateAccountFromDto(@MappingTarget Account account, UpdateAccountDto dto);
 
     @BeforeMapping
     default void updateNotNullableFields(@MappingTarget Account account, UpdateAccountDto dto) {
+        if (dto.getUsername() == null) {
+            dto.setUsername(account.getUsername());
+        }
         if (dto.getType() == null) {
             dto.setType(account.getType());
         }

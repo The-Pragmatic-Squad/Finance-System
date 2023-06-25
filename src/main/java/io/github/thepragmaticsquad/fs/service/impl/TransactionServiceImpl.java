@@ -10,6 +10,7 @@ import io.github.thepragmaticsquad.fs.enums.TransactionType;
 import io.github.thepragmaticsquad.fs.mapper.TransactionMapper;
 import io.github.thepragmaticsquad.fs.repository.TransactionsRepository;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .toList();
     }
 
-    @Override
+    @Transactional
     public TransactionDetailsDto processTransaction(Account account, CreateTransactionDto transactionDto) {
         Transaction saveTransaction = TransactionMapper.INSTANCE.toTransaction(transactionDto);
         BigDecimal amount = transactionDto.getAmount();

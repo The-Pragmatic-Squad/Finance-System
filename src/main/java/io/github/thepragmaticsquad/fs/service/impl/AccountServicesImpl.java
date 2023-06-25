@@ -55,9 +55,7 @@ public class AccountServicesImpl implements AccountService {
         savedAccount.setCreatedAt(LocalDateTime.now());
         savedAccount.setActive(account.getBalance().compareTo(BigDecimal.ZERO) > 0);
         savedAccount.setCreditNumber(cardIssuer.issueCreditCard());
-        if (account.getBalance() == null) {
-            account.setBalance(BigDecimal.ZERO);
-        }
+
         savedAccount.setBalance(account.getBalance());
         savedAccount = accountRepository.save(savedAccount);
 
@@ -75,7 +73,7 @@ public class AccountServicesImpl implements AccountService {
 
 
     public AccountDto getAccount(Long id) {
-        Account account = accountRepository.findAccountByIdAndActiveTrue(id)
+        Account account = accountRepository.findAccountByIdIs(id)
                 .orElseThrow(AccountNotFoundException::new);
 
         return AccountMapper.INSTANCE.toAccountDto(account);
@@ -84,14 +82,14 @@ public class AccountServicesImpl implements AccountService {
 
 
     public AccountAvatarDto getAccountAvatar(Long id) {
-        Account account = accountRepository.findAccountByIdAndActiveTrue(id)
+        Account account = accountRepository.findAccountByIdIs(id)
                 .orElseThrow(AccountNotFoundException::new);
 
         return AccountMapper.INSTANCE.toAbstractedDto(account);
     }
 
     public AccountDto updateAccount(Long id, UpdateAccountDto accountDto) {
-        Account account = accountRepository.findAccountByIdAndActiveTrue(id)
+        Account account = accountRepository.findAccountByIdIs(id)
                 .orElseThrow(AccountNotFoundException::new);
 
         AccountMapper.INSTANCE.updateAccountFromDto(account, accountDto);
@@ -100,14 +98,14 @@ public class AccountServicesImpl implements AccountService {
     }
 
     public void deleteAccount(Long id) {
-        Account account = accountRepository.findAccountByIdAndActiveTrue(id)
+        Account account = accountRepository.findAccountByIdIs(id)
                 .orElseThrow(AccountNotFoundException::new);
 
         account.setActive(false);
         accountRepository.save(account);
     }
 
-
+    @Transactional
     public TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto) {
 
         Account account = accountRepository.findAccountByIdIs(transactionDto.getAccountId())

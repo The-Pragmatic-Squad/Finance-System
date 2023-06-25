@@ -12,7 +12,7 @@ services:
 #    depends_on:
 #        - PostgreSQL_DB
 #        - rabbitmq
-
+#
   rabbitmq:
     image: 'rabbitmq:latest'
     environment:
