@@ -15,7 +15,7 @@ import io.github.thepragmaticsquad.fs.mapper.AccountMapper;
 import io.github.thepragmaticsquad.fs.repository.AccountRepository;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
-import jakarta.transaction.Transactional;
+
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,7 @@ import java.util.Optional;
 public class AccountServicesImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+
     private final TransactionService transactionService;
     private final CardIssuer cardIssuer;
 
@@ -106,6 +107,10 @@ public class AccountServicesImpl implements AccountService {
         account.setActive(false);
         accountRepository.save(account);
     }
+    @Override
+    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
+        return transactionService.getTransactionsByAccountId(id);
+    }
 
 
     public TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto) {
@@ -126,8 +131,5 @@ public class AccountServicesImpl implements AccountService {
         return transaction;
     }
 
-    @Override
-    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
-        return transactionService.getTransactionsByAccountId(id);
-    }
+
 }

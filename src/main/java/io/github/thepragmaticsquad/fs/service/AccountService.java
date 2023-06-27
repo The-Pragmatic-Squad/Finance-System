@@ -12,9 +12,9 @@ import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
 import java.util.List;
 
 public interface AccountService {
-    List<AccountDto> getAllAccounts();
 
     Long createAccount(CreateAccountDto account);
+    List<AccountDto> getAllAccounts();
 
     AccountDto getAccount(Long id);
 
@@ -24,7 +24,7 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
-    TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto);
-
     List<TransactionDetailsDto> getTransactionsByAccountId(Long id);
+
+    TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto);
 }
