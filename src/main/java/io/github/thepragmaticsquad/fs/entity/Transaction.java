@@ -53,4 +53,5 @@ public class Transaction {
 
     @Column(name = "balance_after", columnDefinition = "numeric")
     private BigDecimal balanceAfter;
+
 }
