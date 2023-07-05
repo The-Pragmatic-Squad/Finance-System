@@ -15,7 +15,7 @@ import io.github.thepragmaticsquad.fs.mapper.AccountMapper;
 import io.github.thepragmaticsquad.fs.repository.AccountRepository;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
-import jakarta.transaction.Transactional;
+
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,7 @@ import java.util.Optional;
 public class AccountServicesImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+
     private final TransactionService transactionService;
     private final CardIssuer cardIssuer;
 
@@ -104,6 +105,10 @@ public class AccountServicesImpl implements AccountService {
         account.setActive(false);
         accountRepository.save(account);
     }
+    @Override
+    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
+        return transactionService.getTransactionsByAccountId(id);
+    }
 
     @Transactional
     public TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto) {
@@ -111,21 +116,18 @@ public class AccountServicesImpl implements AccountService {
         Account account = accountRepository.findAccountByIdIs(transactionDto.getAccountId())
                 .orElseThrow(AccountNotFoundException::new);
 
-        TransactionDetailsDto transaction = transactionService.processTransaction(account, transactionDto);
+        TransactionDetailsDto transactionDetailsDto = transactionService.processTransaction(account, transactionDto);
 
-        account.setLastTransaction(transaction.getDate());
-        account.setBalance(transaction.getBalanceAfter());
+        account.setLastTransaction(transactionDetailsDto.getDate());
+        account.setBalance(transactionDetailsDto.getBalanceAfter());
         if (account.getBalance().compareTo(BigDecimal.ZERO) >= 0) {
             account.setActive(true);
         }
 
         accountRepository.save(account);
 
-        return transaction;
+        return transactionDetailsDto;
     }
 
-    @Override
-    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
-        return transactionService.getTransactionsByAccountId(id);
-    }
+
 }
