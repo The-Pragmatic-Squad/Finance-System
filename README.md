@@ -1,10 +1,10 @@
-# Finance System - README
+# Finance System [Core Module]
 
 The Finance System is a core module of the mini Fwary system. It is responsible for managing debit and credit transactions across accounts. This README file provides an overview of the Finance System module, its setup, and usage instructions.
 
 ## Table of Contents
 - [Installation](#installation)
-- [Database Configuration](#database-configuration)
+- [Configuration](#configuration)
 - [Running the Application](#running-the-application)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
@@ -15,14 +15,14 @@ The Finance System is a core module of the mini Fwary system. It is responsible 
 1. Clone the repository or download the source code for the Finance System module.
 2. Ensure that you have Java Development Kit (JDK) version 17 or higher installed.
 3. Set up your development environment (e.g., IDE such as IntelliJ or Eclipse).
-4. 
+4. Ensure that you have the right configs for the project
 
 ## Configuration
 
 The Finance System module requires a PostgreSQL database for storing account and transaction data, RabbitMQ to Listen for Transactions from the Gateway.
 We are using Docker to create a two containers for PostgreSQL and RabbitMQ but if want to install them manualy follow the following steps:
 
-### configure the database:
+### Configure the Database
 
 1. Install PostgreSQL if you haven't already.
 2. Create a new database for the Finance System module.
@@ -32,7 +32,7 @@ We are using Docker to create a two containers for PostgreSQL and RabbitMQ but i
    - `spring.datasource.username`: Username for the database connection.
    - `spring.datasource.password`: Password for the database connection.
 
-### configure RabbitMQ 
+### configure the RabbitMQ 
 
 1. Follow the RabbitMQ recommended installation steps according to your OS https://www.rabbitmq.com/download.html
 2. Update the RabbitMQ configurations in the `application.properties` file located in the module's resources folder.
@@ -58,12 +58,10 @@ To run the Finance System module, follow these steps:
 PS: Make sure that RabbitMQ and PostgreSQL are running and the `application.properties` file is configured with right configs
 ## API Documentation
 
-# Finance System - API Documentation
-
 The Finance System module exposes RESTful APIs for performing account and transaction operations. This documentation provides details about the available endpoints, request and response formats, and example usage. You can also access this documentation through the [Postman Collection](https://planetary-water-707257.postman.co/workspace/Fawry~4fb003f9-33ab-49b5-b5ef-f94cf7d20646/collection/8654587-a9715750-c543-449c-a8fe-aed02afe5390?action=share&creator=8654587) associated with the Finance System module.
 
  
-## Base URL
+### Base URL
 The base URL for all API endpoints is: `http://localhost:9000`
  
 
