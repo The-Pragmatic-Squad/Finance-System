@@ -11,8 +11,9 @@ import io.github.thepragmaticsquad.fs.mapper.TransactionMapper;
 import io.github.thepragmaticsquad.fs.repository.TransactionsRepository;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +24,8 @@ import java.util.Objects;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
+    private static final BigDecimal VIP_ACCOUNT_BALANCE_LIMIT = new BigDecimal(-10000);
+    private static final BigDecimal STANDARD_ACCOUNT_BALANCE_LIMIT = new BigDecimal(-10000);
     private final TransactionsRepository transactionsRepository;
 
     public TransactionServiceImpl(TransactionsRepository transactionsRepository) {
@@ -41,12 +44,12 @@ public class TransactionServiceImpl implements TransactionService {
         return TransactionMapper.INSTANCE.toDetailsDto(transaction);
     }
 
-    public List<TransactionDetailsDto> getTransactionsByAccountId(Long accountId) {
-        List<Transaction> transactions = transactionsRepository.findAllByAccountId(accountId);
-        return transactions.stream()
-                .map(TransactionMapper.INSTANCE::toDetailsDto)
-                .toList();
+    public Page<TransactionDetailsDto> getTransactionsByAccountId(Long accountId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Transaction> transactions = transactionsRepository.findAllByAccountId(accountId, pageable);
+        return transactions.map(TransactionMapper.INSTANCE::toDetailsDto);
     }
+
 
     @Transactional
     public TransactionDetailsDto processTransaction(Account account, CreateTransactionDto transactionDto) {
@@ -69,9 +72,9 @@ public class TransactionServiceImpl implements TransactionService {
         } else if (Objects.equals(transactionType, TransactionType.WITHDRAWAL)) {
             BigDecimal balanceAfter = account.getBalance().subtract(amount);
 
-            if (account.getType() == AccountType.STANDARD && balanceAfter.compareTo(BigDecimal.ZERO) >= 0 && account.isActive()) {
+            if (account.getType() == AccountType.STANDARD && balanceAfter.compareTo(STANDARD_ACCOUNT_BALANCE_LIMIT) >= 0 && account.isActive()) {
                 saveTransaction.setBalanceAfter(balanceAfter);
-            } else if (account.getType() == AccountType.VIP && balanceAfter.compareTo(new BigDecimal(-10000)) >= 0 && account.isActive()) {
+            } else if (account.getType() == AccountType.VIP && balanceAfter.compareTo(VIP_ACCOUNT_BALANCE_LIMIT) >= 0 && account.isActive()) {
                 saveTransaction.setBalanceAfter(balanceAfter);
             } else {
                 saveTransaction.setStatus(TransactionStatus.FAILED);

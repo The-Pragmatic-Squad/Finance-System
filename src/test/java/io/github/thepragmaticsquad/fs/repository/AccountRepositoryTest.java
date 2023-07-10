@@ -4,6 +4,8 @@ import io.github.thepragmaticsquad.fs.entity.Account;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class AccountRepositoryTest {
 
     @Autowired
@@ -22,6 +25,7 @@ class AccountRepositoryTest {
 
     @Test
     void createAccount() {
+        // arrange
         Account account = new Account();
         account.setActive(true);
         account.setBalance(BigDecimal.valueOf(1000));
@@ -29,6 +33,7 @@ class AccountRepositoryTest {
         account.setEmail("aaa@abc.com");
         account.setPassword("abcdefghjkl");
         account.setPhone("01234567890");
+
 
         // act on the repository
         account = accountRepository.save(account);

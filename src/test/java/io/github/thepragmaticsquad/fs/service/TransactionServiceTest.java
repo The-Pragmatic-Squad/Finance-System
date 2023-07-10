@@ -22,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -88,9 +89,10 @@ class TransactionServiceTest {
     void getTransactionsByAccountId() {
         Long accountId = 1L;
         Transaction transaction = transactionMapper.toTransaction(transactionDetailsDto);
-        Mockito.when(transactionsRepository.findAllByAccountId(accountId))
+        Pageable pageable = Pageable.ofSize(10);
+        Mockito.when(transactionsRepository.findAllByAccountId(accountId,pageable))
                 .thenReturn(List.of(transaction));
-        List<TransactionDetailsDto> transactionDetailsDtoList = transactionService.getTransactionsByAccountId(accountId);
+        List<TransactionDetailsDto> transactionDetailsDtoList = transactionService.getTransactionsByAccountId(accountId,0,10);
         // Assert that the returned list is not null
         assertThat(transactionDetailsDtoList).isNotNull().hasSize(1);
         // Assert that the first element in the list matches the mocked transaction
@@ -109,6 +111,6 @@ class TransactionServiceTest {
 
     @Test
     void processTransaction() {
-
+        assert true;
     }
 }

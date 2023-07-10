@@ -8,6 +8,7 @@ import io.github.thepragmaticsquad.fs.dto.transaction.CreateTransactionDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
 import io.github.thepragmaticsquad.fs.service.AccountService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,8 +73,12 @@ public class AccountController {
         headers.set("TransactionStatus", transaction.getStatus().toString());
         return new ResponseEntity<>(transaction.getStatus().toString(), headers, HttpStatus.CREATED);
     }
+
     @GetMapping("{id}/transactions")
-    public List<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("id") Long id){
-        return accountService.getTransactionsByAccountId(id);
+    public Page<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("id") Long id,
+                                                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
+        return accountService.getTransactionsByAccountId(id, page, size);
     }
+
 }

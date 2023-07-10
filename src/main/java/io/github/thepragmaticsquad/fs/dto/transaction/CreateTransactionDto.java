@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class CreateTransactionDto {
 
     private Long accountId;
@@ -24,4 +22,8 @@ public class CreateTransactionDto {
     @NotNull(message = "Amount is required")
     private BigDecimal amount;
 
+    @Override
+    public String toString() {
+        return "A " + type + " transaction with amount " + amount + '$'+ " for account = " + accountId ;
+    }
 }

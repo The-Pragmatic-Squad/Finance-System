@@ -3,7 +3,7 @@ package io.github.thepragmaticsquad.fs.service;
 import io.github.thepragmaticsquad.fs.dto.transaction.CreateTransactionDto;
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
 import io.github.thepragmaticsquad.fs.entity.Account;
-
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface TransactionService {
 
     List<TransactionDetailsDto> getAllTransactions();
 
-    List<TransactionDetailsDto> getTransactionsByAccountId(Long accountId);
+    Page<TransactionDetailsDto> getTransactionsByAccountId(Long accountId, int page, int size);
 
     TransactionDetailsDto processTransaction(Account account, CreateTransactionDto createTransactionDto);
 }

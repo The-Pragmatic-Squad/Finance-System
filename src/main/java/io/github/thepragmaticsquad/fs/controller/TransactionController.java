@@ -1,8 +1,8 @@
 package io.github.thepragmaticsquad.fs.controller;
 
 import io.github.thepragmaticsquad.fs.dto.transaction.TransactionDetailsDto;
-
 import io.github.thepragmaticsquad.fs.service.TransactionService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +28,12 @@ public class TransactionController {
     public TransactionDetailsDto getTransactionById(@PathVariable("id") Long id) {
         return transactionService.getTransactionById(id);
     }
+
     @GetMapping("/account/{accountId}")
-    List<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("accountId")Long accountId){
-        return transactionService.getTransactionsByAccountId(accountId);
+    Page<TransactionDetailsDto> getTransactionsByAccountId(@PathVariable("accountId") Long accountId,
+                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                                           @RequestParam(value = "size", defaultValue = "10") int size) {
+        return transactionService.getTransactionsByAccountId(accountId, page, size);
     }
 
 }

@@ -24,7 +24,6 @@ public class Account {
             sequenceName = "accounts_id_seq",
             allocationSize = 1
     )
-
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accounts_id_seq")
     private Long id;
 

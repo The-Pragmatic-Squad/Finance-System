@@ -17,6 +17,11 @@ import io.github.thepragmaticsquad.fs.service.AccountService;
 import io.github.thepragmaticsquad.fs.service.TransactionService;
 
 
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,12 +31,15 @@ import java.util.Optional;
 
 
 @Service
+@Transactional
+@Slf4j
 public class AccountServicesImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
     private final TransactionService transactionService;
     private final CardIssuer cardIssuer;
+    private static final Logger logger = LoggerFactory.getLogger(AccountServicesImpl.class);
 
     public AccountServicesImpl(AccountRepository accountRepository, TransactionService transactionService, CardIssuer cardIssuer) {
         this.accountRepository = accountRepository;
@@ -86,7 +94,7 @@ public class AccountServicesImpl implements AccountService {
         Account account = accountRepository.findAccountByIdIs(id)
                 .orElseThrow(AccountNotFoundException::new);
 
-        return AccountMapper.INSTANCE.toAbstractedDto(account);
+        return AccountMapper.INSTANCE.toAvatarDto(account);
     }
 
     public AccountDto updateAccount(Long id, UpdateAccountDto accountDto) {
@@ -106,15 +114,16 @@ public class AccountServicesImpl implements AccountService {
         accountRepository.save(account);
     }
     @Override
-    public List<TransactionDetailsDto> getTransactionsByAccountId(Long id) {
-        return transactionService.getTransactionsByAccountId(id);
+    public Page<TransactionDetailsDto> getTransactionsByAccountId(Long id, int page, int size) {
+        return transactionService.getTransactionsByAccountId(id, page, size);
     }
+
+
 
     @Transactional
     public TransactionDetailsDto processTransaction(CreateTransactionDto transactionDto) {
-
         Account account = accountRepository.findAccountByIdIs(transactionDto.getAccountId())
-                .orElseThrow(AccountNotFoundException::new);
+                    .orElseThrow(AccountNotFoundException::new);
 
         TransactionDetailsDto transactionDetailsDto = transactionService.processTransaction(account, transactionDto);
 
